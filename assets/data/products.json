@@ -1,0 +1,21 @@
+[
+    {"id":"c1","name":"Gel Cleanser Oil Control","brand":"Purelia","category":"cleanser","price":59000,"rating":4.4,"oil_control":9,"hydration":4,"gentleness":6,"ingredients":["Salicylic Acid","Zinc PCA","Glycerin","Cocamidopropyl Betaine"]},
+    {"id":"c2","name":"Gentle Milk Cleanser","brand":"Dermalis","category":"cleanser","price":65000,"rating":4.6,"oil_control":3,"hydration":8,"gentleness":9,"ingredients":["Glycerin","Ceramide NP","Panthenol","Allantoin"]},
+    {"id":"c3","name":"Amino Foam Cleanser","brand":"Hydrova","category":"cleanser","price":72000,"rating":4.5,"oil_control":6,"hydration":6,"gentleness":8,"ingredients":["Glycerin","Amino Acid Surfactant","Centella Asiatica","Fragrance"]},
+    {"id":"c4","name":"Fresh Foam Cleanser","brand":"Solaris","category":"cleanser","price":45000,"rating":4.1,"oil_control":8,"hydration":3,"gentleness":4,"ingredients":["Alcohol Denat.","Sodium Laureth Sulfate","Menthol","Fragrance"]},
+
+    {"id":"s1","name":"Niacinamide 10% Serum","brand":"Purelia","category":"serum","price":85000,"rating":4.5,"oil_control":9,"hydration":5,"gentleness":6,"ingredients":["Niacinamide","Zinc PCA","Glycerin"]},
+    {"id":"s2","name":"Hyaluronic Acid Serum","brand":"Hydrova","category":"serum","price":98000,"rating":4.7,"oil_control":4,"hydration":10,"gentleness":8,"ingredients":["Sodium Hyaluronate","Panthenol","Glycerin"]},
+    {"id":"s3","name":"Centella Soothing Serum","brand":"Dermalis","category":"serum","price":120000,"rating":4.6,"oil_control":5,"hydration":7,"gentleness":10,"ingredients":["Centella Asiatica","Panthenol","Allantoin","Madecassoside"]},
+    {"id":"s4","name":"Retinol Night Serum","brand":"Solaris","category":"serum","price":180000,"rating":4.3,"oil_control":7,"hydration":4,"gentleness":3,"ingredients":["Retinol","Squalane","Tocopherol","Fragrance"]},
+
+    {"id":"m1","name":"Oil-Free Gel Moisturizer","brand":"Purelia","category":"moisturizer","price":69000,"rating":4.4,"oil_control":8,"hydration":6,"gentleness":7,"ingredients":["Glycerin","Niacinamide","Aloe Barbadensis"]},
+    {"id":"m2","name":"Ceramide Barrier Cream","brand":"Dermalis","category":"moisturizer","price":135000,"rating":4.8,"oil_control":2,"hydration":10,"gentleness":9,"ingredients":["Ceramide NP","Ceramide AP","Squalane","Cholesterol","Shea Butter"]},
+    {"id":"m3","name":"Daily Lotion Balance","brand":"Hydrova","category":"moisturizer","price":78000,"rating":4.3,"oil_control":5,"hydration":7,"gentleness":7,"ingredients":["Glycerin","Panthenol","Dimethicone"]},
+    {"id":"m4","name":"Aqua Burst Gel Cream","brand":"Solaris","category":"moisturizer","price":55000,"rating":4.0,"oil_control":7,"hydration":7,"gentleness":5,"ingredients":["Sodium Hyaluronate","Parfum","Essential Oil"]},
+
+    {"id":"u1","name":"Matte Sunscreen SPF50 PA++++","brand":"Solaris","category":"sunscreen","price":89000,"rating":4.5,"oil_control":9,"hydration":4,"gentleness":6,"ingredients":["Zinc Oxide","Niacinamide","Silica"]},
+    {"id":"u2","name":"Mineral Sunscreen SPF30","brand":"Dermalis","category":"sunscreen","price":125000,"rating":4.6,"oil_control":4,"hydration":7,"gentleness":10,"ingredients":["Zinc Oxide","Titanium Dioxide","Squalane","Allantoin"]},
+    {"id":"u3","name":"Moisturizing Sunscreen SPF50","brand":"Hydrova","category":"sunscreen","price":95000,"rating":4.4,"oil_control":3,"hydration":9,"gentleness":7,"ingredients":["Sodium Hyaluronate","Glycerin","Tocopherol"]},
+    {"id":"u4","name":"Daily Light Sunscreen SPF35","brand":"Purelia","category":"sunscreen","price":70000,"rating":4.2,"oil_control":6,"hydration":6,"gentleness":6,"ingredients":["Glycerin","Panthenol","Fragrance"]}
+]
