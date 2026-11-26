@@ -13,15 +13,17 @@ class RecommendationState extends Equatable {
   const RecommendationState({
     this.status = RecommendationStatus.loading,
     this.recommendation,
+    this.isSaved = false,
     this.message,
   });
 
   final RecommendationStatus status;
   final Recommendation? recommendation;
+  final bool isSaved;
   final String? message;
 
   @override
-  List<Object?> get props => [status, recommendation, message];
+  List<Object?> get props => [status, recommendation, isSaved, message];
 }
 
 class RecommendationCubit extends Cubit<RecommendationState> {
@@ -43,18 +45,30 @@ class RecommendationCubit extends Cubit<RecommendationState> {
     emit(const RecommendationState());
     try {
       final result = await _useCase(analysis: analysis, profile: profile);
-      emit(RecommendationState(
-        status: RecommendationStatus.success,
-        recommendation: result,
-      ));
       if (save) {
         await _history.add(HistoryRecord(analysis: analysis, profile: profile));
       }
+      emit(RecommendationState(
+        status: RecommendationStatus.success,
+        recommendation: result,
+        isSaved: save,
+      ));
     } catch (e) {
       emit(RecommendationState(
         status: RecommendationStatus.failure,
         message: 'Gagal menyusun rekomendasi: $e',
       ));
     }
+  }
+
+  Future<void> saveRecord(SkinAnalysis analysis, UserProfile profile) async {
+    if (state.isSaved) return;
+    await _history.add(HistoryRecord(analysis: analysis, profile: profile));
+    emit(RecommendationState(
+      status: state.status,
+      recommendation: state.recommendation,
+      isSaved: true,
+      message: state.message,
+    ));
   }
 }

@@ -12,16 +12,21 @@ class DisclaimerBanner extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppTheme.mist,
         borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppTheme.border),
       ),
       child: const Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.info_outline, size: 20, color: AppTheme.teal),
+          Icon(Icons.info_outline_rounded, size: 18, color: AppTheme.navy),
           SizedBox(width: 10),
           Expanded(
             child: Text(
               AppConstants.disclaimer,
-              style: TextStyle(fontSize: 12.5, height: 1.4, color: AppTheme.ink),
+              style: TextStyle(
+                fontSize: 12,
+                height: 1.45,
+                color: AppTheme.slate,
+              ),
             ),
           ),
         ],

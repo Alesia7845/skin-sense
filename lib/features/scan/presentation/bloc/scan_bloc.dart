@@ -13,11 +13,17 @@ abstract class ScanEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class ScanImageRequested extends ScanEvent {
-  const ScanImageRequested(this.source);
-  final ImageSource source;
+/// Dipicu saat foto langsung diambil dari kamera in-app (CameraPreview).
+class ScanCapturedPathRequested extends ScanEvent {
+  const ScanCapturedPathRequested(this.imagePath);
+  final String imagePath;
   @override
-  List<Object?> get props => [source];
+  List<Object?> get props => [imagePath];
+}
+
+/// Dipicu saat user memilih foto dari galeri.
+class ScanGalleryRequested extends ScanEvent {
+  const ScanGalleryRequested();
 }
 
 class ScanReset extends ScanEvent {
@@ -57,7 +63,8 @@ class ScanBloc extends Bloc<ScanEvent, ScanState> {
         _analyzeSkin = analyzeSkin,
         _picker = picker ?? ImagePicker(),
         super(const ScanState()) {
-    on<ScanImageRequested>(_onImageRequested);
+    on<ScanCapturedPathRequested>(_onCapturedPath);
+    on<ScanGalleryRequested>(_onGalleryRequested);
     on<ScanReset>((event, emit) => emit(const ScanState()));
   }
 
@@ -65,48 +72,67 @@ class ScanBloc extends Bloc<ScanEvent, ScanState> {
   final AnalyzeSkinUseCase _analyzeSkin;
   final ImagePicker _picker;
 
-  Future<void> _onImageRequested(
-    ScanImageRequested event,
+  Future<void> _onCapturedPath(
+    ScanCapturedPathRequested event,
+    Emitter<ScanState> emit,
+  ) async {
+    await _processImage(event.imagePath, emit);
+  }
+
+  Future<void> _onGalleryRequested(
+    ScanGalleryRequested event,
     Emitter<ScanState> emit,
   ) async {
     try {
       final file = await _picker.pickImage(
-        source: event.source,
+        source: ImageSource.gallery,
         maxWidth: 1080,
         imageQuality: 88,
-        preferredCameraDevice: CameraDevice.front,
       );
       if (file == null) return;
+      await _processImage(file.path, emit);
+    } catch (e) {
+      emit(ScanState(status: ScanStatus.failure, message: 'Gagal membuka galeri: $e'));
+    }
+  }
 
-      emit(ScanState(status: ScanStatus.validating, imagePath: file.path));
-      final check = await _validateFace(file.path);
+  Future<void> _processImage(
+    String path,
+    Emitter<ScanState> emit,
+  ) async {
+    try {
+      emit(ScanState(status: ScanStatus.validating, imagePath: path));
+      final check = await _validateFace(path);
 
       if (check == FaceCheck.noFace) {
         emit(const ScanState(
           status: ScanStatus.failure,
-          message: 'Wajah tidak terdeteksi. Pastikan wajah terlihat jelas dan pencahayaan cukup.',
+          message:
+              'Wajah tidak terdeteksi. Pastikan wajah terlihat jelas dan pencahayaan cukup.',
         ));
         return;
       }
       if (check == FaceCheck.multipleFaces) {
         emit(const ScanState(
           status: ScanStatus.failure,
-          message: 'Terdeteksi lebih dari satu wajah. Gunakan foto satu wajah saja.',
+          message:
+              'Terdeteksi lebih dari satu wajah. Gunakan foto satu wajah saja.',
         ));
         return;
       }
 
-      emit(ScanState(status: ScanStatus.analyzing, imagePath: file.path));
-      final analysis = await _analyzeSkin(file.path);
+      emit(ScanState(status: ScanStatus.analyzing, imagePath: path));
+      final analysis = await _analyzeSkin(path);
       emit(ScanState(
         status: ScanStatus.success,
-        imagePath: file.path,
+        imagePath: path,
         analysis: analysis,
       ));
     } on Failure catch (f) {
       emit(ScanState(status: ScanStatus.failure, message: f.message));
     } catch (e) {
-      emit(ScanState(status: ScanStatus.failure, message: 'Terjadi kesalahan: $e'));
+      emit(ScanState(
+          status: ScanStatus.failure, message: 'Terjadi kesalahan: $e'));
     }
   }
 }

@@ -3,7 +3,12 @@ import 'package:skinsense/core/theme/app_theme.dart';
 import 'package:skinsense/features/recommendation/domain/entities/need_profile.dart';
 
 class NeedMeter extends StatelessWidget {
-  const NeedMeter({super.key, required this.label, required this.value, required this.color});
+  const NeedMeter({
+    super.key,
+    required this.label,
+    required this.value,
+    required this.color,
+  });
 
   final String label;
   final double value;
@@ -19,12 +24,30 @@ class NeedMeter extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Text(label,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w600, color: AppTheme.ink)),
+                child: Text(
+                  label,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: AppTheme.navy,
+                  ),
+                ),
               ),
-              Text('${NeedProfile.levelOf(value)} (${value.round()})',
-                  style: TextStyle(fontWeight: FontWeight.w700, color: color)),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.12),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  '${NeedProfile.levelOf(value)} • ${value.round()}%',
+                  style: TextStyle(
+                    fontSize: 11.5,
+                    fontWeight: FontWeight.w700,
+                    color: color,
+                  ),
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 6),
@@ -32,8 +55,8 @@ class NeedMeter extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
             child: LinearProgressIndicator(
               value: (value / 100).clamp(0.0, 1.0),
-              minHeight: 10,
-              backgroundColor: AppTheme.mist,
+              minHeight: 8,
+              backgroundColor: AppTheme.ice,
               valueColor: AlwaysStoppedAnimation(color),
             ),
           ),

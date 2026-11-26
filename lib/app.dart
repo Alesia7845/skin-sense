@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:skinsense/core/constants/app_constants.dart';
 import 'package:skinsense/core/di/app_dependencies.dart';
 import 'package:skinsense/core/theme/app_theme.dart';
+import 'package:skinsense/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:skinsense/features/history/presentation/cubit/history_cubit.dart';
 import 'package:skinsense/features/home/presentation/pages/main_shell.dart';
 import 'package:skinsense/features/onboarding/presentation/pages/onboarding_page.dart';
@@ -23,6 +24,7 @@ class SkinSenseApp extends StatelessWidget {
       value: deps.generateRecommendation,
       child: MultiBlocProvider(
         providers: [
+          BlocProvider(create: (_) => AuthCubit(deps.auth)),
           BlocProvider(create: (_) => SettingsCubit(deps.settings)),
           BlocProvider(create: (_) => ProfileCubit(deps.profile)),
           BlocProvider(create: (_) => HistoryCubit(deps.history)..load()),

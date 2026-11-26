@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:skinsense/features/auth/data/auth_repository.dart';
 import 'package:skinsense/features/history/data/history_local_datasource.dart';
 import 'package:skinsense/features/profile/data/profile_repository.dart';
 import 'package:skinsense/features/recommendation/data/product_repository_impl.dart';
@@ -13,6 +14,7 @@ import 'package:skinsense/features/settings/data/settings_repository.dart';
 /// Perakitan dependensi sederhana (tanpa service locator).
 class AppDependencies {
   AppDependencies._({
+    required this.auth,
     required this.settings,
     required this.profile,
     required this.history,
@@ -21,6 +23,7 @@ class AppDependencies {
     required this.generateRecommendation,
   });
 
+  final AuthRepository auth;
   final SettingsRepository settings;
   final ProfileRepository profile;
   final HistoryLocalDataSource history;
@@ -40,6 +43,7 @@ class AppDependencies {
     );
 
     return AppDependencies._(
+      auth: AuthRepository(prefs),
       settings: settings,
       profile: ProfileRepository(prefs),
       history: HistoryLocalDataSource(),

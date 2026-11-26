@@ -13,4 +13,5 @@ class AppConstants {
   static const prefsOnboardingDone = 'onboarding_done';
   static const prefsServerUrl = 'server_url';
   static const prefsProfile = 'user_profile';
+  static const prefsAuthUser = 'auth_user';
 }

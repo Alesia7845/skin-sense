@@ -5,38 +5,60 @@ import 'package:skinsense/shared/models/skin_type.dart';
 import 'package:skinsense/shared/widgets/skin_type_style.dart';
 
 class ProbabilityBar extends StatelessWidget {
-  const ProbabilityBar({super.key, required this.type, required this.value});
+  const ProbabilityBar({
+    super.key,
+    required this.type,
+    required this.value,
+    this.isPrimary = false,
+  });
 
   final SkinType type;
   final double value;
+  final bool isPrimary;
 
   @override
   Widget build(BuildContext context) {
+    final barColor = isPrimary ? AppTheme.coral : AppTheme.navy.withOpacity(0.45);
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
-      child: Row(
+      padding: const EdgeInsets.symmetric(vertical: 7),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: 84,
-            child: Text(type.label,
-                style: const TextStyle(fontWeight: FontWeight.w600, color: AppTheme.ink)),
-          ),
-          Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: LinearProgressIndicator(
-                value: value.clamp(0.0, 1.0),
-                minHeight: 10,
-                backgroundColor: AppTheme.mist,
-                valueColor: AlwaysStoppedAnimation(type.color),
+          Row(
+            children: [
+              Icon(type.icon,
+                  size: 16,
+                  color: isPrimary ? AppTheme.coral : AppTheme.slate),
+              const SizedBox(width: 6),
+              Expanded(
+                child: Text(
+                  type.label,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: isPrimary ? FontWeight.w700 : FontWeight.w600,
+                    color: AppTheme.navy,
+                  ),
+                ),
               ),
-            ),
+              Text(
+                Formatters.percent(value),
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w800,
+                  color: isPrimary ? AppTheme.coral : AppTheme.navy,
+                ),
+              ),
+            ],
           ),
-          SizedBox(
-            width: 48,
-            child: Text(Formatters.percent(value),
-                textAlign: TextAlign.right,
-                style: const TextStyle(fontWeight: FontWeight.w600)),
+          const SizedBox(height: 6),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(8),
+            child: LinearProgressIndicator(
+              value: value.clamp(0.0, 1.0),
+              minHeight: 8,
+              backgroundColor: AppTheme.ice,
+              valueColor: AlwaysStoppedAnimation(barColor),
+            ),
           ),
         ],
       ),
